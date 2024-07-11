@@ -1,9 +1,10 @@
 import { Body, Controller, Get, Header, HttpCode, Param, Post, Req, Put, Delete } from "@nestjs/common";
 import { CreateCatDto, UpdateCatDto } from "./cats.dto";
+import { CatsService } from "./cats.service";
 
 @Controller('cats')
 export class CatsController{
-
+    constructor(private catsService: CatsService){}
     @Post()
     @HttpCode(204)
     @Header('Cache-Control', 'none')
@@ -13,8 +14,8 @@ export class CatsController{
 
     @Get()
     @HttpCode(200)
-    findAll(): string {
-        return "Return List of cats";
+    findAll(): any {
+        return this.catsService.findAll();
     }
 
     @Get(':id')
